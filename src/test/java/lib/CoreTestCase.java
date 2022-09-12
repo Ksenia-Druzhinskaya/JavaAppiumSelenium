@@ -1,0 +1,73 @@
+package lib;
+
+import io.appium.java_client.AppiumDriver;
+import junit.framework.TestCase;
+import lib.ui.StartPageObject;
+import lib.ui.android.AndroidStartPageObject;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import static lib.TestData.MOBILE_SITE_URL;
+
+public class CoreTestCase extends TestCase
+{
+    protected RemoteWebDriver driver;
+
+    @Override
+    protected void setUp() throws Exception{
+        super.setUp();
+        driver = Platform.getInstance().getDriver();
+        this.rotateScreenPortrait();
+        this.openWikiWebPageForMobileWeb();
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        driver.quit();
+        super.tearDown();
+    }
+
+    protected void rotateScreenPortrait(){
+        if(driver instanceof AppiumDriver) {
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        } else {
+            System.out.println("Method rotateScreenPortrait() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    protected void rotateScreenLandscape(){
+        if(driver instanceof AppiumDriver) {
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            driver.rotate(ScreenOrientation.LANDSCAPE);
+        } else {
+            System.out.println("Method rotateScreenLandscape() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    protected void backgroundApp(int seconds){
+        if(driver instanceof AppiumDriver) {
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            driver.runAppInBackground(seconds);
+        } else {
+            System.out.println("Method backgroundApp() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    protected void openWikiWebPageForMobileWeb(){
+        if(Platform.getInstance().isMW()) {
+            driver.get(MOBILE_SITE_URL);
+        } else {
+            System.out.println("Method openWikiWebPageForMobileWeb() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    protected void skipStartPage()
+    {
+        if (Platform.getInstance().isAndroid())
+        {
+            StartPageObject startPageObject = new AndroidStartPageObject(driver);;
+            startPageObject.skipStartPage();
+        }
+    }
+}
