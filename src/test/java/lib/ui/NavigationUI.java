@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class NavigationUI extends MainPageObject
@@ -17,23 +18,28 @@ abstract public class NavigationUI extends MainPageObject
         super(driver);
     }
 
+    @Step("Click Save button")
     public void clickSave() {
         this.waitForElementAndClick(SAVE_BUTTON, "Cannot find Save button.", 5);
     }
 
+    @Step("Wait for articles to save")
     public void waitSaved() {
         this.waitForElementPresent(SAVED_LABEL, "Article is not saved.", 5);
     }
 
+    @Step("Click Save button and wait for saved")
     public void saveAndWaitSaved(){
         clickSave();
         waitSaved();
     }
 
+    @Step("Click Back button")
     public void clickBack() {
         this.waitForElementAndClick(BACK_BUTTON, "Cannot find Back button.", 5);
     }
 
+    @Step("Click on Saved button")
     public void clickSaved() {
         this.waitForElementAndClick(SAVED_BUTTON, "Cannot find Saved button.", 5);
     }

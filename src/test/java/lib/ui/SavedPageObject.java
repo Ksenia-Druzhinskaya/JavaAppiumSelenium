@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class SavedPageObject extends MainPageObject
@@ -16,6 +17,7 @@ abstract public class SavedPageObject extends MainPageObject
     }
     /* TEMPLATE methods */
 
+    @Step("Click saved articles")
     public void clickSavedArticles(Integer articleNumber) {
         String resultLocator = getResultSavedArticlesElement(articleNumber);
         this.waitForElementAndClick(resultLocator, "Cannot find Saved for articles label.", 5);

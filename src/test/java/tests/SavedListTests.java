@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
@@ -7,6 +9,7 @@ import lib.ui.factories.*;
 import org.junit.Test;
 
 import static lib.TestData.*;
+import static org.junit.Assert.assertEquals;
 
 public class SavedListTests extends CoreTestCase
 {
@@ -15,6 +18,10 @@ public class SavedListTests extends CoreTestCase
                     password = "Insta11!";
 
     @Test
+    @DisplayName("Save two articles and delete one")
+    @Description("Find two articles, save them to list, delete one article from list")
+    @Features({@Feature("Search"), @Feature("Article"), @Feature("Watch List")})
+    @Severity(SeverityLevel.NORMAL)
     public void testSaveTwoArticlesAndDeleteOne()
     {
         skipStartPage();
@@ -36,9 +43,9 @@ public class SavedListTests extends CoreTestCase
             searchPageObject.initSearchInput();
             searchPageObject.typeSearchLine(SEARCH_LINE_JAVA);
 
-            // Add first article to watch lost
+            // Add first article to watch list
             searchPageObject.addArticle(ARTICLE_TITLE_JAVA);
-            // Add second article to watch lost
+            // Add second article to watch list
             searchPageObject.addArticle(SECOND_ARTICLE_TITLE_JAVA);
 
             // Close search list
@@ -109,6 +116,10 @@ public class SavedListTests extends CoreTestCase
     }
 
     @Test
+    @DisplayName("Save and delete article")
+    @Description("Find article, save it to list, delete it from list")
+    @Features({@Feature("Search"), @Feature("Article"), @Feature("Watch List")})
+    @Severity(SeverityLevel.NORMAL)
     public void testSaveAndDeleteArticle()
     {
         skipStartPage();

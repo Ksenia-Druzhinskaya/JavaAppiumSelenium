@@ -1,32 +1,37 @@
 package lib;
 
 import io.appium.java_client.AppiumDriver;
-import junit.framework.TestCase;
+import io.qameta.allure.Step;
 import lib.ui.StartPageObject;
 import lib.ui.android.AndroidStartPageObject;
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.FileOutputStream;
+import java.util.Properties;
+
 import static lib.TestData.MOBILE_SITE_URL;
 
-public class CoreTestCase extends TestCase
+public class CoreTestCase
 {
     protected RemoteWebDriver driver;
 
-    @Override
-    protected void setUp() throws Exception{
-        super.setUp();
+    @Before
+    public void setUp() throws Exception{
         driver = Platform.getInstance().getDriver();
+        this.createAllurePropertyFile();
         this.rotateScreenPortrait();
         this.openWikiWebPageForMobileWeb();
     }
 
-    @Override
-    public void tearDown() throws Exception {
+    @After
+    public void tearDown(){
         driver.quit();
-        super.tearDown();
     }
 
+    @Step("Rotate screen portrait")
     protected void rotateScreenPortrait(){
         if(driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
@@ -36,6 +41,7 @@ public class CoreTestCase extends TestCase
         }
     }
 
+    @Step("Rotate screen landscape")
     protected void rotateScreenLandscape(){
         if(driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
@@ -45,6 +51,7 @@ public class CoreTestCase extends TestCase
         }
     }
 
+    @Step("Background application")
     protected void backgroundApp(int seconds){
         if(driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
@@ -54,6 +61,7 @@ public class CoreTestCase extends TestCase
         }
     }
 
+    @Step("Open wiki from mobile page")
     protected void openWikiWebPageForMobileWeb(){
         if(Platform.getInstance().isMW()) {
             driver.get(MOBILE_SITE_URL);
@@ -62,12 +70,27 @@ public class CoreTestCase extends TestCase
         }
     }
 
+    @Step("Skip Start page")
     protected void skipStartPage()
     {
         if (Platform.getInstance().isAndroid())
         {
             StartPageObject startPageObject = new AndroidStartPageObject(driver);;
             startPageObject.skipStartPage();
+        }
+    }
+
+    private void createAllurePropertyFile(){
+        String path = System.getProperty("allure.results.directory");
+        try{
+            Properties properties = new Properties();
+            FileOutputStream fileOutputStream = new FileOutputStream(path + "/environment.properties");
+            properties.setProperty("Environment", Platform.getInstance().getPlatformVar());
+            properties.store(fileOutputStream, "See https://github.com/allure-framework/allure-app/wiki/Environment");
+            fileOutputStream.close();
+        } catch (Exception e) {
+            System.err.println("IO problem when writing allure properties file");
+            e.printStackTrace();
         }
     }
 }

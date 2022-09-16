@@ -1,5 +1,6 @@
 package lib.ui.mobileWeb;
 
+import io.qameta.allure.Step;
 import lib.ui.ArticlePageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -18,11 +19,13 @@ public class MWArticlePageObject extends ArticlePageObject
         super(driver);
     }
 
+    @Step("Add article to saved list")
     public void addArticleToMySaved(){
         this.removeArticleFromSavedIfItAdded();
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
     }
 
+    @Step("Remove article from saved list if it is added")
     public void removeArticleFromSavedIfItAdded(){
         if(this.isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)){
             this.waitForElementAndClick(

@@ -11,5 +11,4 @@ public class TestData
     public static final String SEARCH_LINE_APPIUM = "Appium";
     public static final String ARTICLE_TITLE_APPIUM = "Appium";
     public static final String SEARCH_INPUT_TEXT = "Search Wikipedia";
-
 }

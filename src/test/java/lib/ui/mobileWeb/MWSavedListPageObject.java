@@ -1,5 +1,6 @@
 package lib.ui.mobileWeb;
 
+import io.qameta.allure.Step;
 import lib.ui.SavedListPageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -16,10 +17,12 @@ public class MWSavedListPageObject extends SavedListPageObject
         super(driver);
     }
 
+    @Step("Get Remove button by '{articleTitle}' article title")
     private static String getRemoveButtonByTitle(String articleTitle){
         return REMOVE_FROM_SAVED_BUTTON.replace("{TITLE}", articleTitle);
     }
 
+    @Step("Delete article with '{articleTitle}' title")
     public void deleteArticle(String articleTitle){
         String removeLocator = getRemoveButtonByTitle(articleTitle);
         this.waitForElementAndClick(
@@ -29,6 +32,7 @@ public class MWSavedListPageObject extends SavedListPageObject
         driver.navigate().refresh();
     }
 
+    @Step("Verify that article with '{articleTitle}' title is added")
     public void verifyArticleAdded(String articleTitle){
         String removeLocator = getRemoveButtonByTitle(articleTitle);
         assertTrue("Article '" + articleTitle + "' does not exist in watch list.",

@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class SavedListPageObject extends MainPageObject
@@ -18,11 +19,13 @@ abstract public class SavedListPageObject extends MainPageObject
     }
     /* TEMPLATE methods */
 
+    @Step("Verify that article with '{articleTitle}' title is deleted")
     public void verifyArticleDeleted(String articleTitle){
         String articleResultLocator = getResultArticleElement(articleTitle);
         this.waitForElementNotPresent(articleResultLocator,  "The article '" + articleTitle + "' was not deleted.", 5);
     }
 
+    @Step("Open article by '{articleTitle}' title ")
     public void openArticle(String articleTitle){
         String articleResultLocator = getResultArticleElement(articleTitle);
         this.waitForElementAndClick(articleResultLocator,  "Cannot find '" + articleTitle + "'.", 5);

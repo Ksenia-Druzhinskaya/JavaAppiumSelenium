@@ -28,16 +28,6 @@ public class Platform
         return instance;
     }
 
-    public RemoteWebDriver getDriver1() throws Exception{
-        if(this.isAndroid()){
-            return new AndroidDriver(new URL(APPIUM_URL), this.getAndroidDesiredCapabilities());
-        } else if(this.isMW()) {
-            return new ChromeDriver(this.getMWChromeOptions());
-        } else {
-            throw new Exception("Cannot detect type of the Driver. Platform value is " + this.getPlatformVar());
-        }
-    }
-
     public RemoteWebDriver getDriver() throws Exception{
         URL URL = new URL(APPIUM_URL);
         String currentPlatform = this.getPlatformVar();

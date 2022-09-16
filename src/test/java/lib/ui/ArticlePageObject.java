@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -14,15 +15,18 @@ abstract public class ArticlePageObject extends MainPageObject
         super(driver);
     }
 
+    @Step("Wait for title element")
     public WebElement waitForTitleElement(){
         return this.waitForElementPresent(TITLE, "Cannot find article title on page.", 15);
     }
 
+    @Step("Get article title")
     public String getArticleTitle(){
         WebElement titleElement = waitForTitleElement();
         return titleElement.getText();
     }
 
+    @Step("Swipe article to footer")
     public void swipeToFooter(){
         if(Platform.getInstance().isAndroid()) {
             this.swipeUpToFindElement(
@@ -37,6 +41,7 @@ abstract public class ArticlePageObject extends MainPageObject
         }
     }
 
+    @Step("Verify that article title is present")
     public void assertArticleTitlePresent(){
         this.assertElementPresent(TITLE, "Article title is not present.");
     }

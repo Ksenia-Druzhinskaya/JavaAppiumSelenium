@@ -1,5 +1,6 @@
 package lib.ui.mobileWeb;
 
+import io.qameta.allure.Step;
 import lib.ui.NavigationUI;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -19,10 +20,12 @@ public class MWNavigationUI extends NavigationUI
         super(driver);
     }
 
+    @Step("Open Navigation panel")
     public void openNavigation(){
         this.waitForElementAndClick(OPEN_NAVIGATION, "Cannot find and click open navigation button.", 5);
     }
 
+    @Step("Click My Lists")
     public void clickMyLists(){
         this.tryClickElementWithFewAttempts(
                     MY_LISTS_LINK,
@@ -30,6 +33,7 @@ public class MWNavigationUI extends NavigationUI
                     5);
     }
 
+    @Step("Click Login")
     public void clickLogin(){
         this.tryClickElementWithFewAttempts(
                 LOGIN_LINK,
